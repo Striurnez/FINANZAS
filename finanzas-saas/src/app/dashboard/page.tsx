@@ -37,6 +37,8 @@ import {
 
 import { WhatsAppOnboardingModal } from "@/components/WhatsAppOnboardingModal";
 
+const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#facc15', '#10b981', '#3b82f6'];
+
 export default function DashboardPage() {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);

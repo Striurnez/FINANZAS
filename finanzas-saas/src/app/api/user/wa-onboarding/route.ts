@@ -6,13 +6,16 @@ import { prisma } from "@/lib/prisma";
 export async function PATCH() {
     try {
         const session = await getServerSession(authOptions);
-        if (!session?.user?.phone) {
+        if (!session?.user) {
+            return NextResponse.json({ success: false, error: "No autorizado" }, { status: 401 });
+        }
+        const sessionUser = session.user as any;
+        if (!sessionUser?.phone) {
             return NextResponse.json({ success: false, error: "No autorizado" }, { status: 401 });
         }
 
-        // @ts-ignore
-        await prisma.user.update({
-            where: { phone: session.user.phone },
+        await (prisma.user as any).update({
+            where: { phone: sessionUser.phone },
             data: { waOnboardingDone: true }
         });
 
