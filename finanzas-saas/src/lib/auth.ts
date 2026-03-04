@@ -26,11 +26,11 @@ export const authOptions: NextAuthOptions = {
                         where: { phone: phoneStr },
                     });
 
-                    logAuth(`User found in DB: ${user ? "Yes (ID: " + user.id + ")" : "No"}`);
+                    console.log(`User found in DB: ${user ? "Yes (ID: " + user.id + ")" : "No"}`);
 
                     // Auto-register for simplified UX
                     if (!user) {
-                        logAuth(`Creating new user with phone: ${phoneStr}`);
+                        console.log(`Creating new user with phone: ${phoneStr}`);
                         // @ts-ignore
                         user = await prisma.user.create({
                             data: {
@@ -38,15 +38,15 @@ export const authOptions: NextAuthOptions = {
                                 password: credentials.password,
                             }
                         });
-                        logAuth(`User created successfully. ID: ${user.id}`);
+                        console.log(`User created successfully. ID: ${user.id}`);
                     } else {
                         if (user.password !== credentials.password) {
-                            logAuth("Error: Password mismatch");
+                            console.log("Error: Password mismatch");
                             return null;
                         }
                     }
 
-                    logAuth("Authorize SUCCESS");
+                    console.log("Authorize SUCCESS");
                     return {
                         id: user.id,
                         // @ts-ignore
