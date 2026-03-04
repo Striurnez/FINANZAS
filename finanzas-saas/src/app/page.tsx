@@ -16,8 +16,18 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
 
+    // Normalizar el teléfono: Si tiene 10 dígitos (Colombia), agregar +57. 
+    // Si ya empieza con +, dejarlo así.
+    let normalizedPhone = phone.trim().replace(/\s+/g, "");
+    if (/^\d{10}$/.test(normalizedPhone)) {
+      normalizedPhone = `+57${normalizedPhone}`;
+    } else if (/^\d{11,}$/.test(normalizedPhone)) {
+      // Si tiene más de 10 dígitos pero no tiene +, asumimos que le falta el +
+      normalizedPhone = `+${normalizedPhone}`;
+    }
+
     const res = await signIn("credentials", {
-      phone,
+      phone: normalizedPhone,
       password,
       redirect: false
     });
