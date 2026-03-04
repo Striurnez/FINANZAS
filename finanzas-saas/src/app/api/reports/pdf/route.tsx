@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+
+export const dynamic = 'force-dynamic';
 import ReactPDF, { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import OpenAI from "openai";
 
