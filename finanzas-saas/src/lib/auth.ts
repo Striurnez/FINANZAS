@@ -40,6 +40,15 @@ export const authOptions: NextAuthOptions = {
                                 }
                             });
                             console.log(`[AUTH] Auto-registration SUCCESS (ID: ${user.id})`);
+
+                            // Enviar mensaje de bienvenida por WhatsApp de forma asíncrona (sin bloquear el login)
+                            const welcomeMsg = `¡Hola! Bienvenido a *Cashora* 🚀\n\nDesde ahora puedes enviarme tus gastos e ingresos por aquí para monitorear tus finanzas más fácil.\n\n*¿Cómo usarme?*\n• Para un gasto: \`20000 café\`\n• Para un ingreso: \`+500000 sueldo\`\n\n¡Espero ayudarte a ahorrar mucho! 😊`;
+
+                            // Importación dinámica para evitar problemas en el lado del servidor si es necesario
+                            import("./twilio").then(m => {
+                                m.sendWhatsAppMessage(phoneStr, welcomeMsg);
+                            }).catch(err => console.error("Error sending welcome message:", err));
+
                         } catch (createError: any) {
                             console.error("[AUTH] Auto-registration FAILED:", createError.message || createError);
                             throw new Error("Could not create user");
