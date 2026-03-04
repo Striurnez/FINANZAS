@@ -28,6 +28,7 @@
   * {
     @apply border-[hsl(var(--border))];
   }
+
   body {
     @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -36,21 +37,28 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-white/10;
+    @apply bg-white/5 dark:bg-white/[0.02] backdrop-blur-xl border border-white/10 dark:border-white/5;
   }
-  
+
   .text-glow {
     text-shadow: 0 0 20px hsla(var(--primary), 0.5);
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Custom Scrollbar */
@@ -58,13 +66,16 @@
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--muted));
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground));
 }

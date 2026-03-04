@@ -140,45 +140,48 @@ export default function PlaneacionPage() {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Clock className="w-5 h-5 text-purple-400" />
-                            <h2 className="text-xl font-bold text-white">Pagos Recurrentes</h2>
+                            <h2 className="text-xl font-bold text-foreground">Pagos Recurrentes</h2>
                         </div>
                         <button
                             onClick={() => setShowRecurringForm(!showRecurringForm)}
-                            className="bg-white/5 hover:bg-white/10 p-2 rounded-xl border border-white/10 text-gray-400 transition-all hover:text-white"
+                            className="bg-muted hover:bg-muted/80 p-2 rounded-xl border border-border text-muted-foreground transition-all hover:text-foreground"
                         >
                             {showRecurringForm ? <X className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
                         </button>
                     </div>
 
                     {showRecurringForm && (
-                        <div className="glass p-6 rounded-3xl border border-indigo-500/30 bg-indigo-500/5 space-y-4 animate-in fade-in slide-in-from-top-4">
+                        <div className="glass p-6 rounded-3xl border border-primary/30 bg-primary/5 space-y-4 animate-in fade-in slide-in-from-top-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="col-span-2">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase ml-1">Nombre / Concepto</label>
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Nombre / Concepto</label>
                                     <input
                                         type="text"
                                         placeholder="Ej: Netflix, Alquiler"
                                         value={newRecurring.name}
                                         onChange={e => setNewRecurring({ ...newRecurring, name: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500/50"
+                                        className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase ml-1">Monto (Gasto = -)</label>
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Monto (Gasto = -)</label>
                                     <input
-                                        type="number"
-                                        placeholder="0.00"
-                                        value={newRecurring.amount}
-                                        onChange={e => setNewRecurring({ ...newRecurring, amount: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500/50"
+                                        type="text"
+                                        placeholder="0"
+                                        value={newRecurring.amount ? Number(newRecurring.amount).toLocaleString('es-CO') : ""}
+                                        onChange={e => {
+                                            const rawValue = e.target.value.replace(/\./g, '').replace(/[^0-9-]/g, '');
+                                            setNewRecurring({ ...newRecurring, amount: rawValue });
+                                        }}
+                                        className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50 font-mono"
                                     />
                                 </div>
                                 <div>
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase ml-1">Frecuencia</label>
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Frecuencia</label>
                                     <select
                                         value={newRecurring.frequency}
                                         onChange={e => setNewRecurring({ ...newRecurring, frequency: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500/50"
+                                        className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50"
                                     >
                                         <option value="weekly">Semanal</option>
                                         <option value="monthly">Mensual</option>
@@ -186,12 +189,12 @@ export default function PlaneacionPage() {
                                     </select>
                                 </div>
                                 <div className="col-span-2">
-                                    <label className="text-[10px] font-bold text-gray-500 uppercase ml-1">Próximo Vencimiento</label>
+                                    <label className="text-[10px] font-bold text-muted-foreground uppercase ml-1">Próximo Vencimiento</label>
                                     <input
                                         type="date"
                                         value={newRecurring.nextDueDate}
                                         onChange={e => setNewRecurring({ ...newRecurring, nextDueDate: e.target.value })}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500/50"
+                                        className="w-full bg-muted border border-border rounded-xl px-4 py-2.5 text-sm text-foreground focus:outline-none focus:border-primary/50"
                                     />
                                 </div>
                             </div>
@@ -201,13 +204,13 @@ export default function PlaneacionPage() {
                                         type="checkbox"
                                         checked={newRecurring.autoRegister}
                                         onChange={e => setNewRecurring({ ...newRecurring, autoRegister: e.target.checked })}
-                                        className="w-4 h-4 rounded border-white/10 bg-black/40 text-indigo-500 focus:ring-indigo-500/20"
+                                        className="w-4 h-4 rounded border-border bg-muted text-primary focus:ring-primary/20"
                                     />
-                                    <span className="text-xs text-gray-400 group-hover:text-gray-200 transition-colors">Auto-registrar</span>
+                                    <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">Auto-registrar</span>
                                 </label>
                                 <button
                                     onClick={handleAddRecurring}
-                                    className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
+                                    className="bg-primary hover:brightness-110 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all"
                                 >
                                     Guardar Pago
                                 </button>
@@ -217,35 +220,35 @@ export default function PlaneacionPage() {
 
                     <div className="space-y-4">
                         {recurring.length > 0 ? recurring.map((p) => (
-                            <div key={p.id} className="glass p-4 rounded-2xl border border-white/5 transition-all hover:bg-white/[0.02] flex items-center justify-between group">
+                            <div key={p.id} className="glass p-4 rounded-2xl border border-border transition-all hover:bg-foreground/[0.02] flex items-center justify-between group">
                                 <div className="flex items-center gap-4">
                                     <div className={`p-2 rounded-xl ${p.amount > 0 ? "bg-emerald-500/10" : "bg-red-500/10"}`}>
-                                        <Calendar className={`w-5 h-5 ${p.amount > 0 ? "text-emerald-400" : "text-red-400"}`} />
+                                        <Calendar className={`w-5 h-5 ${p.amount > 0 ? "text-emerald-500" : "text-red-500"}`} />
                                     </div>
                                     <div>
-                                        <p className="font-bold text-white text-sm">{p.name}</p>
+                                        <p className="font-bold text-foreground text-sm">{p.name}</p>
                                         <div className="flex items-center gap-2">
-                                            <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{p.frequency}</span>
-                                            <span className="text-[10px] text-indigo-400 font-bold italic">Próximo: {format(new Date(p.nextDueDate), "d MMM", { locale: es })}</span>
+                                            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">{p.frequency}</span>
+                                            <span className="text-[10px] text-primary font-bold italic">Próximo: {format(new Date(p.nextDueDate), "d MMM", { locale: es })}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <p className={`font-black text-sm ${p.amount > 0 ? "text-emerald-400" : "text-white"}`}>
+                                    <p className={`font-black text-sm ${p.amount > 0 ? "text-emerald-500" : "text-foreground"}`}>
                                         {p.amount > 0 ? "+" : ""}${p.amount.toLocaleString('es-CO')}
                                     </p>
                                     <button
                                         onClick={() => handleDeleteRecurring(p.id)}
-                                        className="p-2 text-gray-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                                        className="p-2 text-muted-foreground hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
                                     >
                                         <Trash2 className="w-4 h-4" />
                                     </button>
                                 </div>
                             </div>
                         )) : (
-                            <div className="text-center py-10 border border-dashed border-white/10 rounded-3xl">
-                                <p className="text-sm text-gray-500">No tienes pagos recurrentes configurados.</p>
-                                <button onClick={() => setShowRecurringForm(true)} className="text-indigo-400 text-xs mt-2 font-bold hover:underline">Añadir el primero</button>
+                            <div className="text-center py-10 border border-dashed border-border rounded-3xl">
+                                <p className="text-sm text-muted-foreground">No tienes pagos recurrentes configurados.</p>
+                                <button onClick={() => setShowRecurringForm(true)} className="text-primary text-xs mt-2 font-bold hover:underline">Añadir el primero</button>
                             </div>
                         )}
                     </div>
@@ -254,52 +257,52 @@ export default function PlaneacionPage() {
                 {/* 2. REGLAS FINANCIERAS */}
                 <section className="space-y-6">
                     <div className="flex items-center gap-2">
-                        <AlertCircle className="w-5 h-5 text-indigo-400" />
-                        <h2 className="text-xl font-bold text-white">Alertas & Reglas Inteligentes</h2>
+                        <AlertCircle className="w-5 h-5 text-primary" />
+                        <h2 className="text-xl font-bold text-foreground">Alertas & Reglas Inteligentes</h2>
                     </div>
 
-                    <div className="glass p-6 rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-500/5 to-transparent space-y-4">
+                    <div className="glass p-6 rounded-3xl border border-border bg-gradient-to-br from-primary/5 to-transparent space-y-4">
                         <div className="space-y-4">
-                            <div className="p-4 bg-white/5 border border-white/5 rounded-2xl flex items-start gap-4">
-                                <div className="p-2 bg-indigo-500/10 rounded-lg">
-                                    <ArrowRight className="w-4 h-4 text-indigo-400" />
+                            <div className="p-4 bg-muted border border-border rounded-2xl flex items-start gap-4">
+                                <div className="p-2 bg-primary/10 rounded-lg">
+                                    <ArrowRight className="w-4 h-4 text-primary" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-bold text-white">Alerta de Sobregasto</p>
-                                    <p className="text-xs text-gray-400 mt-1">Si gasto más del 20% en <span className="text-white font-medium italic">Alimentación</span> comparado con el mes anterior.</p>
+                                    <p className="text-sm font-bold text-foreground">Alerta de Sobregasto</p>
+                                    <p className="text-xs text-muted-foreground mt-1">Si gasto más del 20% en <span className="text-foreground font-medium italic">Alimentación</span> comparado con el mes anterior.</p>
                                     <div className="mt-3 flex items-center gap-2">
-                                        <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase">Activa</span>
-                                        <span className="text-[10px] text-gray-500 italic">Pre-configurada por IA</span>
+                                        <span className="text-[10px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded font-bold uppercase">Activa</span>
+                                        <span className="text-[10px] text-muted-foreground italic">Pre-configurada por IA</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-4 bg-white/5 border border-white/5 rounded-2xl flex items-start gap-4">
+                            <div className="p-4 bg-muted border border-border rounded-2xl flex items-start gap-4">
                                 <div className="p-2 bg-purple-500/10 rounded-lg">
                                     <TrendingUp className="w-4 h-4 text-purple-400" />
                                 </div>
                                 <div>
-                                    <p className="text-sm font-bold text-white">Detector de Suscripciones</p>
-                                    <p className="text-xs text-gray-400 mt-1">Notificarme si tengo más de 3 transacciones recurrentes el mismo día.</p>
+                                    <p className="text-sm font-bold text-foreground">Detector de Suscripciones</p>
+                                    <p className="text-xs text-muted-foreground mt-1">Notificarme si tengo más de 3 transacciones recurrentes el mismo día.</p>
                                     <div className="mt-3 flex items-center gap-2">
-                                        <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold uppercase">Activa</span>
+                                        <span className="text-[10px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded font-bold uppercase">Activa</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="text-center py-6 border border-dashed border-white/10 rounded-2xl">
-                                <p className="text-xs text-gray-500 mb-2">Las reglas avanzadas usan aprendizaje automático.</p>
-                                <button className="text-[10px] bg-white/5 hover:bg-white/10 text-white px-3 py-1.5 rounded-lg border border-white/10 font-bold transition-all">Crear Regla Personalizada</button>
+                            <div className="text-center py-6 border border-dashed border-border rounded-2xl">
+                                <p className="text-xs text-muted-foreground mb-2">Las reglas avanzadas usan aprendizaje automático.</p>
+                                <button className="text-[10px] bg-muted hover:bg-muted/80 text-foreground px-3 py-1.5 rounded-lg border border-border font-bold transition-all">Crear Regla Personalizada</button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="p-6 bg-gradient-to-r from-indigo-600/20 to-purple-600/20 rounded-3xl border border-white/10">
+                    <div className="p-6 bg-gradient-to-r from-primary/20 to-purple-600/20 rounded-3xl border border-border">
                         <div className="flex items-center gap-3 mb-3">
-                            <CheckCircle2 className="w-5 h-5 text-indigo-400" />
-                            <h3 className="font-bold text-white italic">IA Proactiva</h3>
+                            <CheckCircle2 className="w-5 h-5 text-primary" />
+                            <h3 className="font-bold text-foreground italic">IA Proactiva</h3>
                         </div>
-                        <p className="text-xs text-gray-300 leading-relaxed font-medium">
+                        <p className="text-xs text-muted-foreground leading-relaxed font-medium">
                             Cashora está monitoreando tus flujos 24/7. Pronto recibirás recomendaciones directas si detectamos anomalías en tus patrones de consumo.
                         </p>
                     </div>
@@ -307,4 +310,30 @@ export default function PlaneacionPage() {
             </div>
         </div>
     );
+}
+
+// Helper to convert HEX to HSL format for CSS variables
+function hexToHsl(hex: string): string {
+    let r = parseInt(hex.slice(1, 3), 16) / 255;
+    let g = parseInt(hex.slice(3, 5), 16) / 255;
+    let b = parseInt(hex.slice(5, 7), 16) / 255;
+
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+            default: h = 0;
+        }
+        h /= 6;
+    }
+
+    return `${(h * 360).toFixed(1)} ${(s * 100).toFixed(1)}% ${(l * 100).toFixed(1)}%`;
 }

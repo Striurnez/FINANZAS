@@ -44,14 +44,14 @@ export function SmartInput({ onTransactionAdded }: { onTransactionAdded: () => v
     };
 
     return (
-        <div className="glass rounded-2xl p-6 border border-white/10 relative overflow-hidden group">
+        <div className="glass rounded-2xl p-6 border border-border relative overflow-hidden group">
             {/* Background glow effect following hover would be here conceptually, keeping it simple for now */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-20 transition duration-1000 blur" />
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-purple-500 rounded-2xl opacity-0 group-hover:opacity-10 transition duration-1000 blur" />
 
             <div className="relative">
                 <div className="flex items-center gap-2 mb-4">
-                    <Sparkles className="w-5 h-5 text-indigo-400" />
-                    <h2 className="text-lg font-semibold tracking-tight">Registro Inteligente</h2>
+                    <Sparkles className="w-5 h-5 text-primary" />
+                    <h2 className="text-lg font-semibold tracking-tight text-foreground">Registro Inteligente</h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="relative">
@@ -61,12 +61,12 @@ export function SmartInput({ onTransactionAdded }: { onTransactionAdded: () => v
                         onChange={(e) => setText(e.target.value)}
                         disabled={loading}
                         placeholder='Ej: "25000 Almuerzo con compañeros" o "+200000 Pago cliente"'
-                        className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-4 pr-14 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all font-medium"
+                        className="w-full bg-muted border border-border rounded-xl py-4 pl-4 pr-14 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-medium"
                     />
                     <button
                         type="submit"
                         disabled={loading || !text}
-                        className="absolute right-2 top-2 bottom-2 aspect-square flex items-center justify-center bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors disabled:opacity-50 disabled:hover:bg-indigo-600"
+                        className="absolute right-2 top-2 bottom-2 aspect-square flex items-center justify-center bg-primary hover:brightness-110 text-white rounded-lg transition-colors disabled:opacity-50"
                     >
                         {loading ? (
                             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -76,9 +76,27 @@ export function SmartInput({ onTransactionAdded }: { onTransactionAdded: () => v
                     </button>
                 </form>
 
+                {/* Amount Preview Overlay */}
+                {text && (
+                    <div className="mt-2 flex items-center gap-2">
+                        {(() => {
+                            const match = text.match(/-?\d+/);
+                            if (match) {
+                                const amount = parseInt(match[0]);
+                                return (
+                                    <span className="text-[10px] font-medium text-muted-foreground bg-foreground/5 px-2 py-1 rounded-md">
+                                        Detectado: <span className="text-primary font-bold">${amount.toLocaleString('es-CO')}</span>
+                                    </span>
+                                );
+                            }
+                            return null;
+                        })()}
+                    </div>
+                )}
+
                 {status.message && (
-                    <div className={`mt-3 text-sm font-medium animate-fade-in flex items-center gap-2 ${status.type === "success" ? "text-emerald-400" : "text-red-400"}`}>
-                        <div className={`w-1.5 h-1.5 rounded-full ${status.type === "success" ? "bg-emerald-400" : "bg-red-400"}`} />
+                    <div className={`mt-3 text-sm font-medium animate-fade-in flex items-center gap-2 ${status.type === "success" ? "text-emerald-500" : "text-red-500"}`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${status.type === "success" ? "bg-emerald-500" : "bg-red-500"}`} />
                         {status.message}
                     </div>
                 )}
