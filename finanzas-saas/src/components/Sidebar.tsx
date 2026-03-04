@@ -37,7 +37,7 @@ export function Sidebar() {
                 }
             `}</style>
 
-            <div className="flex items-center justify-between mb-10 text-[hsl(var(--foreground))]">
+            <div className="flex items-center justify-between mb-10 text-foreground">
                 <div className="flex items-center gap-3">
                     <div className="p-2 bg-primary/20 rounded-lg text-primary" style={{ color: profileColor }}>
                         <Wallet className="w-6 h-6" />
@@ -46,7 +46,7 @@ export function Sidebar() {
                 </div>
                 <button
                     onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="p-2 hover:bg-white/5 rounded-xl transition-colors text-muted-foreground hover:text-[hsl(var(--foreground))]"
+                    className="p-2 hover:bg-muted rounded-xl transition-colors text-muted-foreground hover:text-foreground"
                 >
                     {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                 </button>
@@ -63,7 +63,7 @@ export function Sidebar() {
                             href={link.href}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group ${isActive
                                 ? "bg-primary/10 font-medium"
-                                : "text-muted-foreground hover:bg-white/5 hover:text-[hsl(var(--foreground))]"
+                                : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                 }`}
                             style={isActive ? { color: profileColor, backgroundColor: `${profileColor}15` } : {}}
                         >
@@ -96,7 +96,7 @@ export function Sidebar() {
                 </div>
                 <button
                     onClick={() => signOut({ callbackUrl: "/" })}
-                    className="w-full flex items-center gap-3 px-3 py-2.5 text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
+                    className="w-full flex items-center gap-3 px-3 py-2.5 text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
                 >
                     <LogOut className="w-5 h-5" />
                     <span className="font-medium text-sm">Cerrar Sesión</span>

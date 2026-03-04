@@ -144,7 +144,7 @@ export default function DashboardPage() {
                                 stroke="currentColor"
                                 strokeWidth="8"
                                 fill="transparent"
-                                className="text-foreground/5 dark:text-white/5"
+                                className="text-muted/30"
                             />
                             <circle
                                 cx="48"
@@ -186,7 +186,7 @@ export default function DashboardPage() {
                     {forecast?.alert && (
                         <div className="flex items-center gap-2 p-2 bg-red-500/10 border border-red-500/20 rounded-xl animate-pulse">
                             <AlertCircle className="w-3 h-3 text-red-500" />
-                            <p className="text-[10px] text-red-200 font-bold uppercase tracking-tighter">{forecast.alert}</p>
+                            <p className="text-[10px] text-red-500 font-bold uppercase tracking-tighter">{forecast.alert}</p>
                         </div>
                     )}
                 </div>

@@ -23,8 +23,8 @@ export default function DashboardLayout({
 
     if (status === "loading") {
         return (
-            <div className="h-screen w-screen flex items-center justify-center bg-black text-white">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+            <div className="h-screen w-screen flex items-center justify-center bg-background text-foreground">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
             </div>
         );
     }
@@ -37,7 +37,7 @@ export default function DashboardLayout({
 
     if (status === "authenticated") {
         return (
-            <div className="flex min-h-screen bg-black text-white selection:bg-indigo-500/30 pb-20 md:pb-0">
+            <div className="flex min-h-screen bg-background text-foreground selection:bg-primary/30 pb-20 md:pb-0">
                 <Sidebar />
                 <main className="flex-1 overflow-y-auto">
                     {children}
