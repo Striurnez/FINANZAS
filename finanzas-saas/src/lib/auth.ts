@@ -12,41 +12,47 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Contraseña", type: "password" }
             },
             async authorize(credentials) {
-                console.log(`Authorize attempt for phone: ${credentials?.phone}`);
+                console.log(`[AUTH] Login attempt for phone: ${credentials?.phone}`);
                 try {
                     if (!credentials?.phone || !credentials?.password) {
+                        console.log("[AUTH] Error: Missing phone or password");
                         return null;
                     }
 
-                    // Forzar búsqueda con string exacto
                     const phoneStr = String(credentials.phone).trim();
+                    console.log(`[AUTH] Searching for user: ${phoneStr}`);
 
                     // @ts-ignore
                     let user = await prisma.user.findUnique({
                         where: { phone: phoneStr },
                     });
 
-                    console.log(`User found in DB: ${user ? "Yes (ID: " + user.id + ")" : "No"}`);
+                    console.log(`[AUTH] DB Result: ${user ? "User found (ID: " + user.id + ")" : "User NOT found"}`);
 
-                    // Auto-register for simplified UX
                     if (!user) {
-                        console.log(`Creating new user with phone: ${phoneStr}`);
-                        // @ts-ignore
-                        user = await prisma.user.create({
-                            data: {
-                                phone: phoneStr,
-                                password: credentials.password,
-                            }
-                        });
-                        console.log(`User created successfully. ID: ${user.id}`);
+                        console.log(`[AUTH] Triggering Auto-registration for: ${phoneStr}`);
+                        try {
+                            // @ts-ignore
+                            user = await prisma.user.create({
+                                data: {
+                                    phone: phoneStr,
+                                    password: credentials.password,
+                                }
+                            });
+                            console.log(`[AUTH] Auto-registration SUCCESS (ID: ${user.id})`);
+                        } catch (createError: any) {
+                            console.error("[AUTH] Auto-registration FAILED:", createError.message || createError);
+                            throw new Error("Could not create user");
+                        }
                     } else {
                         if (user.password !== credentials.password) {
-                            console.log("Error: Password mismatch");
+                            console.log("[AUTH] Error: Password mismatch");
                             return null;
                         }
+                        console.log("[AUTH] Password matched successfully");
                     }
 
-                    console.log("Authorize SUCCESS");
+                    console.log("[AUTH] Authorize status: SUCCESS");
                     return {
                         id: user.id,
                         // @ts-ignore
@@ -57,7 +63,7 @@ export const authOptions: NextAuthOptions = {
                         profileColor: user.profileColor
                     };
                 } catch (error: any) {
-                    console.error("CRITICAL AUTH ERROR:", error);
+                    console.error("[AUTH] CRITICAL ERROR during authorize:", error.message || error);
                     return null;
                 }
             }
