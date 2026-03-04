@@ -1,14 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
-import fs from "fs";
-import path from "path";
 
-function logAuth(msg: string) {
-    const logPath = "c:\\Users\\lison\\OneDrive\\Documentos\\FINANZAS\\finanzas-saas\\auth.log";
-    const timestamp = new Date().toISOString();
-    fs.appendFileSync(logPath, `[${timestamp}] ${msg}\n`);
-}
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -19,10 +12,9 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Contraseña", type: "password" }
             },
             async authorize(credentials) {
-                logAuth(`Authorize attempt for phone: ${credentials?.phone}`);
+                console.log(`Authorize attempt for phone: ${credentials?.phone}`);
                 try {
                     if (!credentials?.phone || !credentials?.password) {
-                        logAuth("Error: Missing credentials");
                         return null;
                     }
 
@@ -65,7 +57,6 @@ export const authOptions: NextAuthOptions = {
                         profileColor: user.profileColor
                     };
                 } catch (error: any) {
-                    logAuth(`CRITICAL AUTH ERROR: ${error.message}`);
                     console.error("CRITICAL AUTH ERROR:", error);
                     return null;
                 }
