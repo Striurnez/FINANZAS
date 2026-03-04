@@ -18,6 +18,7 @@ model User {
   monthlySpendAlert Boolean        @default(true)
   pdfReportEmail    Boolean        @default(true)
   savingsReminder   Boolean        @default(true)
+  waOnboardingDone  Boolean        @default(false)
   createdAt         DateTime       @default(now())
   movimientos       Movimiento[]
   reports           Report[]

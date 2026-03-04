@@ -35,12 +35,13 @@ import {
     Cell
 } from "recharts";
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f43f5e', '#facc15', '#10b981', '#3b82f6'];
+import { WhatsAppOnboardingModal } from "@/components/WhatsAppOnboardingModal";
 
 export default function DashboardPage() {
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [pdfLoading, setPdfLoading] = useState(false);
+    const [showWAModal, setShowWAModal] = useState(false);
 
     // Temporal Offsets
     const [weekOffset, setWeekOffset] = useState(0);
@@ -53,6 +54,10 @@ export default function DashboardPage() {
             const json = await res.json();
             if (json.success) {
                 setData(json.data);
+                // Mostrar modal si el usuario no ha completado el onboarding de WhatsApp
+                if (json.data.user && !json.data.user.waOnboardingDone) {
+                    setShowWAModal(true);
+                }
             }
         } catch (error) {
             console.error(error);
@@ -471,6 +476,11 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </section>
+
+            <WhatsAppOnboardingModal
+                isOpen={showWAModal}
+                onClose={() => setShowWAModal(false)}
+            />
         </div>
     );
 }
