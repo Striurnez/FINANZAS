@@ -14,8 +14,15 @@ export function MobileNavBar() {
         { name: "Ajustes", href: "/ajustes", icon: Settings },
     ];
 
+    const profileColor = "#6366f1"; // Default, ideally from session/props
+
     return (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 glass border-t border-white/10 p-4 pb-6 z-50 flex justify-around items-center">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 glass border-t p-4 pb-6 z-50 flex justify-around items-center">
+            <style jsx>{`
+                .active-link {
+                    color: ${profileColor};
+                }
+            `}</style>
             {links.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -23,10 +30,11 @@ export function MobileNavBar() {
                     <Link
                         key={link.name}
                         href={link.href}
-                        className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${isActive ? "text-indigo-400" : "text-gray-500 hover:text-gray-300"
+                        className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all ${isActive ? "" : "text-muted-foreground hover:text-[hsl(var(--foreground))]"
                             }`}
+                        style={isActive ? { color: profileColor } : {}}
                     >
-                        <Icon className={`w-6 h-6 ${isActive ? "text-indigo-400" : ""}`} />
+                        <Icon className={`w-6 h-6`} />
                         <span className="text-[10px] font-medium">{link.name}</span>
                     </Link>
                 );

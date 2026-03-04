@@ -19,9 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className="dark">
-      {/* Forzamos modo oscuro para un look premium por defecto, pero permitiremos toggle luego */}
-      <body className={`${inter.className} bg-[#0A0A0A] text-white antialiased min-h-screen selection:bg-indigo-500/30`}>
+    <html lang="es" suppressHydrationWarning>
+      <body className={`${inter.className} antialiased min-h-screen selection:bg-indigo-500/30`}>
         <Providers>
           {children}
         </Providers>
