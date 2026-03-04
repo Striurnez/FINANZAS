@@ -22,10 +22,32 @@ export const authOptions: NextAuthOptions = {
                     const phoneStr = String(credentials.phone).trim();
                     console.log(`[AUTH] Searching for user: ${phoneStr}`);
 
+                    // Intentar búsqueda con el formato recibido
                     // @ts-ignore
                     let user = await prisma.user.findUnique({
                         where: { phone: phoneStr },
                     });
+
+                    // Si no se encuentra y el número tiene el prefijo +57, 
+                    // intentamos buscarlo sin el prefijo (compatibilidad con usuarios antiguos)
+                    if (!user && phoneStr.startsWith("+57")) {
+                        const noPrefix = phoneStr.replace("+57", "");
+                        console.log(`[AUTH] User not found with prefix. Trying without: ${noPrefix}`);
+                        // @ts-ignore
+                        user = await prisma.user.findUnique({
+                            where: { phone: noPrefix },
+                        });
+
+                        // Si lo encontramos sin prefijo, lo actualizamos al nuevo formato automáticamente
+                        if (user) {
+                            console.log(`[AUTH] User found without prefix. Migrating to: ${phoneStr}`);
+                            // @ts-ignore
+                            await prisma.user.update({
+                                where: { id: user.id },
+                                data: { phone: phoneStr }
+                            });
+                        }
+                    }
 
                     console.log(`[AUTH] DB Result: ${user ? "User found (ID: " + user.id + ")" : "User NOT found"}`);
 
@@ -41,24 +63,24 @@ export const authOptions: NextAuthOptions = {
                             });
                             console.log(`[AUTH] Auto-registration SUCCESS (ID: ${user.id})`);
 
-                            // Enviar mensaje de bienvenida por WhatsApp de forma asíncrona (sin bloquear el login)
+                            // Enviar mensaje de bienvenida por WhatsApp de forma asíncrona
                             const welcomeMsg = `¡Hola! Bienvenido a *Cashora* 🚀\n\nDesde ahora puedes enviarme tus gastos e ingresos por aquí para monitorear tus finanzas más fácil.\n\n*¿Cómo usarme?*\n• Para un gasto: \`20000 café\`\n• Para un ingreso: \`+500000 sueldo\`\n\n¡Espero ayudarte a ahorrar mucho! 😊`;
 
-                            // Importación dinámica para evitar problemas en el lado del servidor si es necesario
+                            // Importación dinámica fuera del flujo principal
                             import("./twilio").then(m => {
                                 m.sendWhatsAppMessage(phoneStr, welcomeMsg);
-                            }).catch(err => console.error("Error sending welcome message:", err));
+                            }).catch(err => console.error("[AUTH] Error sending welcome message:", err));
 
                         } catch (createError: any) {
                             console.error("[AUTH] Auto-registration FAILED:", createError.message || createError);
-                            throw new Error("Could not create user");
+                            throw new Error(`Auto-registration failed: ${createError.message}`);
                         }
                     } else {
                         if (user.password !== credentials.password) {
-                            console.log("[AUTH] Error: Password mismatch");
+                            console.log(`[AUTH] Error: Password mismatch for user ${phoneStr}`);
                             return null;
                         }
-                        console.log("[AUTH] Password matched successfully");
+                        console.log(`[AUTH] Password matched for user ${phoneStr}`);
                     }
 
                     console.log("[AUTH] Authorize status: SUCCESS");
