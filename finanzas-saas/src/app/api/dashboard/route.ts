@@ -128,9 +128,22 @@ export async function GET(req: Request) {
             console.error("Error in forecast logic:", e);
         }
 
+        // --- USER INFO ---
+        const user = await prisma.user.findUnique({
+            where: { id: session.user.id },
+            select: {
+                id: true,
+                nickname: true,
+                profileColor: true,
+                profileIcon: true,
+                waOnboardingDone: true
+            }
+        });
+
         return NextResponse.json({
             success: true,
             data: {
+                user, // Añadido para que el frontend sepa si mostrar el modal de WA
                 weekly,
                 monthly,
                 score,
