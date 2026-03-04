@@ -278,21 +278,21 @@ export default function DashboardPage() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="glass p-6 rounded-2xl border border-white/10 flex flex-col justify-center">
-                            <p className="text-xs font-medium text-gray-500 mb-1">Balance del Mes</p>
-                            <h4 className="text-2xl font-bold">${(monthly?.ingresos - monthly?.gastos).toLocaleString('es-CO')}</h4>
+                        <div className="glass p-6 rounded-2xl border border-border flex flex-col justify-center">
+                            <p className="text-xs font-medium text-muted-foreground mb-1">Balance del Mes</p>
+                            <h4 className="text-2xl font-bold text-foreground">${(monthly?.ingresos - monthly?.gastos).toLocaleString('es-CO')}</h4>
                         </div>
-                        <div className="glass p-4 rounded-2xl border border-white/10">
-                            <p className="text-xs font-medium text-gray-500 mb-1">Ingresos</p>
-                            <h4 className="text-xl font-bold text-emerald-400">${monthly?.ingresos.toLocaleString('es-CO')}</h4>
-                            <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+                        <div className="glass p-4 rounded-2xl border border-border">
+                            <p className="text-xs font-medium text-muted-foreground mb-1">Ingresos</p>
+                            <h4 className="text-xl font-bold text-emerald-500">${monthly?.ingresos.toLocaleString('es-CO')}</h4>
+                            <div className="w-full bg-foreground/5 h-1.5 rounded-full mt-3 overflow-hidden">
                                 <div className="bg-emerald-500 h-full" style={{ width: '100%' }}></div>
                             </div>
                         </div>
-                        <div className="glass p-4 rounded-2xl border border-white/10">
-                            <p className="text-xs font-medium text-gray-500 mb-1">Gastos</p>
-                            <h4 className="text-xl font-bold text-red-400">${monthly?.gastos.toLocaleString('es-CO')}</h4>
-                            <div className="w-full bg-white/5 h-1.5 rounded-full mt-3 overflow-hidden">
+                        <div className="glass p-4 rounded-2xl border border-border">
+                            <p className="text-xs font-medium text-muted-foreground mb-1">Gastos</p>
+                            <h4 className="text-xl font-bold text-red-500">${monthly?.gastos.toLocaleString('es-CO')}</h4>
+                            <div className="w-full bg-foreground/5 h-1.5 rounded-full mt-3 overflow-hidden">
                                 <div
                                     className="bg-red-500 h-full"
                                     style={{ width: `${Math.min(100, (monthly?.gastos / (monthly?.ingresos || 1)) * 100)}%` }}
@@ -325,14 +325,19 @@ export default function DashboardPage() {
                                                     ))}
                                                 </Pie>
                                                 <Tooltip
-                                                    contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', borderRadius: '0.8rem', border: '1px solid rgba(255,255,255,0.1)' }}
-                                                    itemStyle={{ color: '#E5E7EB' }}
+                                                    contentStyle={{
+                                                        backgroundColor: 'hsl(var(--background))',
+                                                        borderColor: 'hsl(var(--border))',
+                                                        borderRadius: '0.8rem',
+                                                        border: '1px solid hsl(var(--border))'
+                                                    }}
+                                                    itemStyle={{ color: 'hsl(var(--foreground))' }}
                                                     formatter={(value: number | undefined, name: string | undefined) => [`$${value?.toLocaleString('es-CO') || 0}`, name || ""]}
                                                 />
                                             </PieChart>
                                         </ResponsiveContainer>
                                     ) : (
-                                        <div className="h-full flex items-center justify-center text-gray-500 text-sm italic">
+                                        <div className="h-full flex items-center justify-center text-muted-foreground text-sm italic">
                                             Sin datos de gastos en este periodo.
                                         </div>
                                     )}
@@ -342,9 +347,9 @@ export default function DashboardPage() {
                                         <div key={index} className="flex items-center justify-between group">
                                             <div className="flex items-center gap-2">
                                                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                                                <span className="text-xs text-gray-400 group-hover:text-white transition-colors">{entry.name}</span>
+                                                <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">{entry.name}</span>
                                             </div>
-                                            <span className="text-xs font-bold text-gray-200">${entry.value.toLocaleString('es-CO')}</span>
+                                            <span className="text-xs font-bold text-foreground">${entry.value.toLocaleString('es-CO')}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -354,33 +359,33 @@ export default function DashboardPage() {
 
                     {/* Month's Highlights / Alerts Column (Modified for Savings Goals) */}
                     <div className="space-y-4">
-                        <div className="glass p-5 rounded-2xl border border-white/10 h-full flex flex-col">
+                        <div className="glass p-5 rounded-2xl border border-border h-full flex flex-col">
                             <div className="flex items-center justify-between mb-4">
-                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-tighter">Resumen IA</h4>
-                                <div className="p-1 px-2 bg-indigo-500/10 rounded flex items-center gap-1">
-                                    <AlertCircle className="w-3 h-3 text-indigo-400" />
-                                    <span className="text-[8px] font-bold text-indigo-400 uppercase">Inteligencia saas</span>
+                                <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-tighter">Resumen IA</h4>
+                                <div className="p-1 px-2 bg-primary/10 rounded flex items-center gap-1">
+                                    <AlertCircle className="w-3 h-3 text-primary" />
+                                    <span className="text-[8px] font-bold text-primary uppercase">Inteligencia saas</span>
                                 </div>
                             </div>
 
                             <div className="space-y-4 flex-1">
                                 {(monthly?.gastos > monthly?.ingresos) && monthly?.ingresos > 0 && (
                                     <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
-                                        <p className="text-xs text-red-200 leading-relaxed font-medium">Tus gastos superaron tus ingresos. Considera reducir compras no esenciales.</p>
+                                        <p className="text-xs text-red-500 leading-relaxed font-bold">Tus gastos superaron tus ingresos. Considera reducir compras no esenciales.</p>
                                     </div>
                                 )}
                                 {(monthly?.ingresos > monthly?.gastos) && (
                                     <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-                                        <p className="text-xs text-emerald-200 leading-relaxed font-medium">¡Buen trabajo! Has ahorrado ${(monthly.ingresos - monthly.gastos).toLocaleString('es-CO')} este mes.</p>
+                                        <p className="text-xs text-emerald-600 leading-relaxed font-bold">¡Buen trabajo! Has ahorrado ${(monthly.ingresos - monthly.gastos).toLocaleString('es-CO')} este mes.</p>
                                     </div>
                                 )}
-                                <div className="p-3 bg-indigo-500/5 border border-white/5 rounded-xl">
-                                    <p className="text-[10px] text-gray-400 uppercase font-bold mb-1">Ratio Ahorro Real</p>
+                                <div className="p-3 bg-primary/5 border border-border rounded-xl">
+                                    <p className="text-[10px] text-muted-foreground uppercase font-bold mb-1">Ratio Ahorro Real</p>
                                     <div className="flex items-end gap-2">
-                                        <span className="text-xl font-bold text-indigo-400">
+                                        <span className="text-xl font-bold text-primary">
                                             {monthly?.ingresos > 0 ? (((monthly?.ingresos - monthly?.gastos) / monthly?.ingresos) * 100).toFixed(1) : 0}%
                                         </span>
-                                        <span className="text-[10px] text-gray-500 mb-1">del total mensual</span>
+                                        <span className="text-[10px] text-muted-foreground mb-1">del total mensual</span>
                                     </div>
                                 </div>
 
