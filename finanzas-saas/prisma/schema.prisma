@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                String         @id @default(cuid())
+  phone             String         @unique
+  email             String?        @unique
+  password          String
+  nickname          String?
+  profileIcon       String?        // Ej: "A", "user-icon", etc.
+  profileColor      String?        @default("#6366f1")
+  notificationsOn   Boolean        @default(true)
+  monthlySpendAlert Boolean        @default(true)
+  pdfReportEmail    Boolean        @default(true)
+  savingsReminder   Boolean        @default(true)
+  createdAt         DateTime       @default(now())
+  movimientos       Movimiento[]
+  reports           Report[]
+  savingsGoals      SavingsGoal[]
+  recurringPayments RecurringPayment[]
+  financialRules    FinancialRule[]
+}
+
+model Movimiento {
+  id          String   @id @default(cuid())
+  userId      String
+  monto       Float
+  tipo        String   // "ingreso" o "gasto"
+  descripcion String
+  categoria   String
+  metodoPago  String?
+  fecha       DateTime
+  mes         Int
+  anio        Int      @map("año")
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([userId, mes, anio])
+}
+
+model Report {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mes       Int
+  anio      Int
+  path      String   // Path al archivo generado
+  tipo      String   @default("mensual") // mensual, semanal
+  createdAt DateTime @default(now())
+
+  @@unique([userId, mes, anio, tipo]) // Idempotencia: un solo reporte por periodo
+}
+
+model SavingsGoal {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nombre    String
+  monto     Float
+  createdAt DateTime @default(now())
+}
+
+model RecurringPayment {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  amount       Float
+  frequency    String   // "weekly", "monthly", "yearly"
+  dayOfMonth   Int?
+  nextDueDate  DateTime
+  autoRegister Boolean  @default(false)
+  notify       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+}
+
+model FinancialRule {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  triggerType String   // "expense_category", "balance_threshold"
+  condition   String   // JSON or logic string
+  action      String   // "alert", "notify"
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+}
+

@@ -1,0 +1,139 @@
+[2026-02-28T22:58:46.733Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:46.738Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:58:49.127Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:49.129Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:58:49.747Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:49.748Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:58:50.062Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:50.063Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:58:50.221Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:50.222Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:58:50.362Z] Authorize attempt for phone: 3165443216
+[2026-02-28T22:58:50.363Z] CRITICAL AUTH ERROR: 
+Invalid `prisma.user.findUnique()` invocation:
+
+{
+  where: {
+    phone: "3165443216",
+    ~~~~~
+?   id?: String,
+?   email?: String,
+?   AND?: UserWhereInput | UserWhereInput[],
+?   OR?: UserWhereInput[],
+?   NOT?: UserWhereInput | UserWhereInput[],
+?   password?: StringFilter | String,
+?   createdAt?: DateTimeFilter | DateTime,
+?   movimientos?: MovimientoListRelationFilter
+  }
+}
+
+Unknown argument `phone`. Available options are marked with ?.
+[2026-02-28T22:59:26.011Z] Authorize attempt for phone: pjoshias@gmail.com
+[2026-02-28T22:59:26.178Z] User found in DB: No
+[2026-02-28T22:59:26.178Z] Creating new user with phone: pjoshias@gmail.com
+[2026-02-28T22:59:26.191Z] User created successfully. ID: cmm6xb5gq0000mssj6feyhcb3
+[2026-02-28T22:59:26.192Z] Authorize SUCCESS
+[2026-02-28T23:00:17.947Z] Authorize attempt for phone: 3165443216
+[2026-02-28T23:00:18.115Z] User found in DB: No
+[2026-02-28T23:00:18.116Z] Creating new user with phone: 3165443216
+[2026-02-28T23:00:18.137Z] User created successfully. ID: cmm6xc9jl0000vcsjyvpukaaq
+[2026-02-28T23:00:18.137Z] Authorize SUCCESS
+[2026-03-04T00:05:22.505Z] Authorize attempt for phone: 3165443216
+[2026-03-04T00:05:22.730Z] User found in DB: Yes (ID: cmm6xc9jl0000vcsjyvpukaaq)
+[2026-03-04T00:05:22.730Z] Authorize SUCCESS
+[2026-03-04T01:59:52.940Z] Authorize attempt for phone: 3165443216
+[2026-03-04T01:59:53.128Z] User found in DB: Yes (ID: cmm6xc9jl0000vcsjyvpukaaq)
+[2026-03-04T01:59:53.129Z] Authorize SUCCESS
+[2026-03-04T13:38:06.033Z] Authorize attempt for phone: 3165443216
+[2026-03-04T13:38:06.275Z] User found in DB: Yes (ID: cmm6xc9jl0000vcsjyvpukaaq)
+[2026-03-04T13:38:06.276Z] Authorize SUCCESS
